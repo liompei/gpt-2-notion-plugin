@@ -1,0 +1,107 @@
+openapi: 3.0.1
+info:
+  title: Push2Notion
+  description: Allow users to upload GPT-generated content, and the plugin will save the GPT-generated content to Notion
+  version: 'v1'
+servers:
+  - url: https://hello--liompei.repl.co
+paths:
+  /notion/add/{username}:
+    post:
+      operationId: addNotion
+      summary: Upload the conversation content between the previous user and GPT
+      parameters:
+        - in: path
+          name: username
+          required: true
+          description: user GPT unique ID
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addNotion'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: 请求参数错误
+  /notion/primaryData/{username}:
+    get:
+      operationId: getNotionKey
+      summary: get notion connections secrets key and database_id
+      description: get notion connections secrets key and database_id
+      parameters:
+        - in: path
+          name: username
+          description: user GPT unique ID
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getNotionKey'
+
+    post:
+      operationId: setNotionPrimaryData
+      summary: Set the necessary parameters for a note, including connections secrets key and database_ id
+      parameters:
+        - in: path
+          name: username
+          description: user GPT unique ID
+          schema:
+            type: string
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/setNotionKey'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: 请求参数错误
+
+components:
+  schemas:
+    addNotion:
+      type: object
+      properties:
+        user_content:
+          type: string
+          required: true
+          description: The user's content in the previous conversation,key is user_content
+        assistant_content:
+          type: string
+          required: true
+          description: The content of gpt in the previous conversation,key is assistant_content
+        description:
+          type: string
+          required: true
+          description: Summarize the content of the previous conversation, within ten words
+    getNotionKey:
+      type: object
+      properties:
+        token:
+          type: string
+          description: connections secrets key/internal integration token,required=true
+        database_id:
+          type: string
+          description: notion database_id,required=true
+    setNotionKey:
+      type: object
+      properties:
+        token:
+          type: string
+          description: connections secrets key/internal integration token,required=true
+        database_id:
+          type: string
+          description: notion database_id,required=true

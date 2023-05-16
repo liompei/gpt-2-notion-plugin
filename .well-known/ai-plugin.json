@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Push2Notion",
+  "name_for_model": "push2notion",
+  "description_for_human": "Upload the previous content to Notion.",
+  "description_for_model": "When the user says \"save content to note\" or \"upload to note\", the previous conversation between the user and GPT is actively uploaded to the server through the API. When the user needs to save the conversation without setting the note key, they are guided to obtain the key and prompted to connect to the key at the place where the conversation needs to be saved on the note. In addition, when the user first uses this plugin in a new session, You should first call the check key interface to see if the key is set",
+  "auth": {
+    "type": "none"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://hello--liompei.repl.co/openapi.yaml",
+    "is_user_authenticated": false
+  },
+  "logo_url": "https://hello--liompei.repl.co/logo.png",
+  "contact_email": "newbeiliming@gmail.com",
+  "legal_info_url": "https://aliceheshui.com/legal"
+}
