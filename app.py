@@ -1,10 +1,11 @@
 from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
+
 from notion_data import push2notion
 
 app = Flask(__name__)
 CORS(app, resource={r"/*": {'origins': 'https://chat.openai.com'}})
-
+DATA_HOST = "http://127.0.0.1:5000"
 user_data = {}
 
 
@@ -86,7 +87,7 @@ def plugin_manifest():
     print('plugin_manifest ' + host)
     with open('./.well-known/ai-plugin.json') as f:
         text = f.read()
-        # text.replace("","")
+        text = text.replace("PLUGIN_HOSTNAME", DATA_HOST)
         return text, 200, {'Content-Type': 'application/json; charset=utf-8'}
 
 
@@ -96,6 +97,7 @@ def openapi_spec():
     print('请求openapi ' + host)
     with open('openapi.yaml') as f:
         text = f.read()
+        text = text.replace("PLUGIN_HOSTNAME", DATA_HOST)
         return text, 200, {'Content-Type': 'text/yaml; charset=utf-8'}
 
 

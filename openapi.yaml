@@ -4,7 +4,7 @@ info:
   description: Allow users to upload GPT-generated content, and the plugin will save the GPT-generated content to Notion
   version: 'v1'
 servers:
-  - url: https://hello--liompei.repl.co
+  - url: PLUGIN_HOSTNAME
 paths:
   /notion/add/{username}:
     post:

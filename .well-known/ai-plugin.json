@@ -9,10 +9,10 @@
   },
   "api": {
     "type": "openapi",
-    "url": "https://hello--liompei.repl.co/openapi.yaml",
+    "url": "PLUGIN_HOSTNAME/openapi.yaml",
     "is_user_authenticated": false
   },
-  "logo_url": "https://hello--liompei.repl.co/logo.png",
+  "logo_url": "PLUGIN_HOSTNAME/logo.png",
   "contact_email": "newbeiliming@gmail.com",
-  "legal_info_url": "https://aliceheshui.com/legal"
+  "legal_info_url": "PLUGIN_HOSTNAME/legal"
 }
