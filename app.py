@@ -6,8 +6,8 @@ from notion_data import push2notion
 app = Flask(__name__)
 CORS(app, resource={r"/*": {'origins': 'https://chat.openai.com'}})
 DATA_HOST = "http://127.0.0.1:5001"
-# DATA_HOST = 'https://gpt-2-notion.liompei.repl.co'
-# DATA_HOST = 'https://<YOUR_REPO>.<YOUR_OWNER>.repl.co'
+# DATA_HOST = 'https://gpt-2-notion--liompei.repl.co'
+# DATA_HOST = 'https://<YOUR_REPO>--<YOUR_OWNER>.repl.co'
 
 user_data = {}
 
