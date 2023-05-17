@@ -1,5 +1,5 @@
 
-# ChatGPT plugins Push2Notin
+# ChatGPT plugins Push2Notion
 
 
 <br>
