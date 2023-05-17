@@ -2,7 +2,6 @@ import requests
 from datetime import date
 
 notion_url = 'https://api.notion.com/v1/pages'
-NOTION_API_KEY = 'secret_mza5aImtQar1DV1oSruqRBwbCA49JGfHNmtDFMtKBtN'
 
 
 def push2notion(user_content, assistant_content, description, token, database_id):
