@@ -3,7 +3,7 @@
 
 
 <br>
-If you do not already have plugin developer access, please [join the waitlist](https://openai.com/waitlist/plugins).
+If you do not already have plugin developer access, please ![join the waitlist](https://openai.com/waitlist/plugins).
 
 ## Setup
 
