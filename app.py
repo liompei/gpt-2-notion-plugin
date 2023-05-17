@@ -1,24 +1,26 @@
 from flask import Flask, request, send_file, jsonify
 from flask_cors import CORS
-
+import markdown
 from notion_data import push2notion
 
 app = Flask(__name__)
 CORS(app, resource={r"/*": {'origins': 'https://chat.openai.com'}})
-DATA_HOST = "http://127.0.0.1:5000"
+DATA_HOST = "http://127.0.0.1:5001"
+# DATA_HOST = 'https://gpt-2-notion.liompei.repl.co'
+# DATA_HOST = 'https://<YOUR_REPO>.<YOUR_OWNER>.repl.co'
+
 user_data = {}
 
 
 @app.route('/notion/add/<string:username>', methods=['POST'])
 def add_notion(username):
-    print('添加到notion ' + username)
     openai_conversation_id = request.headers.get('Openai-Conversation-Id')
 
     if openai_conversation_id not in user_data:
         return 'not set notion key for this user', 400
 
     user = user_data[openai_conversation_id]
-    token = user['token']
+    notion_integration = user['notion_integration']
     database_id = user['database_id']
 
     request_data = request.get_json(force=True)
@@ -34,7 +36,7 @@ def add_notion(username):
         user_content=user_content,
         assistant_content=assistant_content,
         description=description,
-        token=token,
+        token=notion_integration,
         database_id=database_id
     )
     if notion_response.status_code == 200:
@@ -46,15 +48,14 @@ def add_notion(username):
 
 @app.route('/notion/primaryData/<string:username>', methods=['POST'])
 def set_notion_primary_data(username):
-    print('设置notion key ' + username)
     request_data = request.get_json(force=True)
     print(request_data)
     openai_conversation_id = request.headers.get('Openai-Conversation-Id')
-    token = request_data['token']
+    notion_integration = request_data['notion_integration']
     database_id = request_data['database_id']
 
     user_data[openai_conversation_id] = {
-        'token': token,
+        'notion_integration': notion_integration,
         'database_id': database_id
     }
 
@@ -64,15 +65,14 @@ def set_notion_primary_data(username):
 
 @app.route('/notion/primaryData/<string:username>', methods=['GET'])
 def get_notion_primary_data(username):
-    print('获取notionkey  ' + username)
     openai_conversation_id = request.headers.get('Openai-Conversation-Id')
     if openai_conversation_id not in user_data:
         return 'Invalid Openai-Conversation-Id', 401
     user = user_data[openai_conversation_id]
-    token = user['token']
+    notion_integration = user['notion_integration']
     database_id = user['database_id']
 
-    return jsonify(token, database_id), 200
+    return jsonify(notion_integration, database_id), 200
 
 
 @app.route('/logo.png', methods=['GET'])
@@ -94,7 +94,7 @@ def plugin_manifest():
 @app.route('/openapi.yaml', methods=['GET'])
 def openapi_spec():
     host = request.headers['Host']
-    print('请求openapi ' + host)
+    print('openapi ' + host)
     with open('openapi.yaml') as f:
         text = f.read()
         text = text.replace("PLUGIN_HOSTNAME", DATA_HOST)
@@ -105,7 +105,12 @@ def openapi_spec():
 def hello_world():  # put application's code here
     host = request.headers['Host']
     print('index ' + host)
-    return 'Hello World!'
+
+    with open('README.md', 'r') as f:
+        markdown_content = f.read()
+        html_content = markdown.markdown(markdown_content)
+    centered_html_content = f'<div style="max-width: 60vw; margin: 0 auto;">{html_content}</div>'
+    return centered_html_content
 
 
 if __name__ == '__main__':

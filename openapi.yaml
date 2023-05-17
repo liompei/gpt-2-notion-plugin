@@ -99,7 +99,7 @@ components:
     setNotionKey:
       type: object
       properties:
-        token:
+        notion_integration:
           type: string
           description: connections secrets key/internal integration token,required=true
         database_id:

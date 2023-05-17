@@ -32,3 +32,4 @@ def push2notion(user_content, assistant_content, description, token, database_id
     }
     response = requests.post(url=notion_url, headers=headers, json=data)
     return response
+
